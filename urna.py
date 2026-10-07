@@ -1,73 +1,75 @@
 import tkinter as tk
 from tkinter import messagebox
 
+# Todos começam com ZERO votos
 votos = {
-    "Luiz Inácio Lula da Silva": 13,
-    "Renan Santos": 14,
-    "Hertz Dias": 16,
-    "Edmilson Costa": 21,
-    "Flavio Bolsonaro": 22,
-    "Clariana Barão": 27,
-    "Pablo Marçal": 28,
-    "Rui Costa Pimenta": 29,
-    "Romeu Zema": 30,
-    "Wilson Grassi": 35,
-    "Ronaldo Caiado": 55,
-    "Augusto Cury": 70,
-    "Samara Martins": 80,
+    "Luiz Inácio Lula da Silva": 0,
+    "Renan Santos": 0,
+    "Hertz Dias": 0,
+    "Edmilson Costa": 0,
+    "Flavio Bolsonaro": 0,
+    "Clariana Barão": 0,
+    "Pablo Marçal": 0,
+    "Rui Costa Pimenta": 0,
+    "Romeu Zema": 0,
+    "Wilson Grassi": 0,
+    "Ronaldo Caiado": 0,
+    "Augusto Cury": 0,
+    "Samara Martins": 0,
     "Branco": 0,
     "Nulo": 0
 }
 
-def votar():
-    numero = entrada.get()
+# Relaciona o número ao nome do candidato
+candidatos = {
+    "13": "Luiz Inácio Lula da Silva",
+    "14": "Renan Santos",
+    "16": "Hertz Dias",
+    "21": "Edmilson Costa",
+    "22": "Flavio Bolsonaro",
+    "27": "Clariana Barão",
+    "28": "Pablo Marçal",
+    "29": "Rui Costa Pimenta",
+    "30": "Romeu Zema",
+    "35": "Wilson Grassi",
+    "55": "Ronaldo Caiado",
+    "70": "Augusto Cury",
+    "80": "Samara Martins"
+}
 
-    if numero == "13":
-        votos["Luiz Inácio Lula da Silva"] += 13
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "14":
-        votos["Renan Santos"] += 14
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "16":
-        votos["Hertz Dias"] += 16
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "21":
-        votos["Edmilson Costa"] += 21
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "21":
-        votos["Flavio Bolsonaro"] += 22
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "27":
-        votos["Clariana Barão"] += 27
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "28":
-        votos["Pablo Marçal"] += 28
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "29":
-        votos["Rui Costa Pimenta"] += 29
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "30":
-        votos["Romeu Zema"] += 30
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "35":
-        votos["Wilson Grassi"] += 35
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "55":
-        votos["Ronaldo Caiado"] += 55
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "70":
-        votos["Augusto Cury"] += 70
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "80":
-        votos["Samara Martins"] += 80
-        messagebox.showinfo("Urna", "Voto registrado!")
-    elif numero == "0":
+
+def votar():
+    numero = entrada.get().strip()
+
+    # Verifica se é candidato
+    if numero in candidatos:
+        candidato = candidatos[numero]
+        votos[candidato] += 1
+
+        messagebox.showinfo(
+            "Urna",
+            f"Voto registrado para:\n{candidato}"
+        )
+
+    # Voto em branco
+    elif numero == "0" or numero == "00":
         votos["Branco"] += 1
-        messagebox.showinfo("Urna", "Voto em branco registrado!")
+
+        messagebox.showinfo(
+            "Urna",
+            "Voto em branco registrado!"
+        )
+
+    # Voto nulo
     else:
         votos["Nulo"] += 1
-        messagebox.showinfo("Urna", "Voto nulo registrado!")
 
+        messagebox.showinfo(
+            "Urna",
+            "Voto nulo registrado!"
+        )
+
+    # Limpa o campo depois do voto
     entrada.delete(0, tk.END)
 
 
@@ -80,11 +82,14 @@ def resultado():
     messagebox.showinfo("Resultado", texto)
 
 
+# Janela principal
 janela = tk.Tk()
 janela.title("Urna Digital")
 janela.geometry("500x600")
 janela.resizable(False, False)
 
+
+# Título
 titulo = tk.Label(
     janela,
     text="🗳️ URNA DIGITAL",
@@ -92,12 +97,16 @@ titulo = tk.Label(
 )
 titulo.pack(pady=20)
 
+
+# Instrução
 tk.Label(
     janela,
     text="Digite o número do candidato:",
     font=("Arial", 12)
 ).pack()
 
+
+# Campo para digitar o número
 entrada = tk.Entry(
     janela,
     font=("Arial", 20),
@@ -105,6 +114,8 @@ entrada = tk.Entry(
 )
 entrada.pack(pady=10)
 
+
+# Botão votar
 tk.Button(
     janela,
     text="VOTAR",
@@ -112,6 +123,8 @@ tk.Button(
     command=votar
 ).pack(pady=10)
 
+
+# Botão resultado
 tk.Button(
     janela,
     text="VER RESULTADO",
@@ -120,6 +133,7 @@ tk.Button(
 ).pack(pady=10)
 
 
+# Lista de candidatos
 tk.Label(
     janela,
     text="""13 - Luiz Inácio Lula da Silva
@@ -127,10 +141,11 @@ tk.Label(
 16 - Hertz Dias
 21 - Edmilson Costa
 22 - Flávio Bolsonaro
-25 - Wilson Grassi
 27 - Clariana Barão
+28 - Pablo Marçal
 29 - Rui Costa Pimenta
 30 - Romeu Zema
+35 - Wilson Grassi
 55 - Ronaldo Caiado
 70 - Augusto Cury
 80 - Samara Martins
@@ -139,4 +154,5 @@ tk.Label(
 ).pack(pady=10)
 
 
+# Inicia o programa
 janela.mainloop()
